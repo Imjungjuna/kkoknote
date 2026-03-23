@@ -3,21 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run build:widget && next dev",
+    "build": "next build && npm run build:widget",
     "start": "next start",
+    "build:widget": "node scripts/build-widget-sdk.mjs",
     "lint": "eslint"
   },
   "dependencies": {
+    "@supabase/ssr": "*",
+    "@supabase/supabase-js": "*",
+    "lucide-react": "*",
     "next": "16.2.1",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zustand": "*"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "*",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",
