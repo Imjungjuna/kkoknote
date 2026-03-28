@@ -1,57 +1,9 @@
-import BetaSignupForm from "@/components/BetaSignupForm";
-
-const features = [
-  "스크립트 태그 하나로 설치 완료 — 백엔드 불필요",
-  "투표, 피드백 보드, 체인지로그 기본 제공",
-  "서비스 디자인에 맞는 위젯 커스터마이징",
-];
+import BetaSection from "@/components/BetaSection";
 
 export default function JoinBetaPage() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-zinc-50 px-6 py-16">
-      <div className="w-full max-w-sm md:max-w-md flex flex-col gap-10">
-        {/* Hero */}
-        <div className="animate-fade-up" style={{ animationDelay: "0ms" }}>
-          <p className="text-[11px] tracking-[0.2em] uppercase text-zinc-400 mb-5">
-            Coming Soon
-          </p>
-          <h1 className="text-[2rem] leading-[1.15] font-semibold tracking-tight text-zinc-900 mb-4">
-            유저 피드백,
-            <br />
-            이제 제대로 받으세요.
-          </h1>
-          <p className="text-[14px] text-zinc-500 leading-relaxed">
-            KkokNote는 인디 해커와 개발자를 위한 경량 임베드 피드백 위젯입니다.
-            <br />
-            스크립트 태그 하나로 바로 시작하세요.
-          </p>
-        </div>
-
-        {/* Divider */}
-        <hr className="border-none h-px bg-zinc-200 -mt-5" />
-
-        {/* Features */}
-        <ul
-          className="flex flex-col gap-3 animate-fade-up"
-          style={{ animationDelay: "80ms" }}
-        >
-          {features.map((f, i) => (
-            <li key={f} className="flex items-start gap-3">
-              <span className="text-[11px] text-zinc-300 shrink-0 pt-[2px] font-mono">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="text-[13px] text-zinc-500 leading-relaxed">
-                {f}
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Form */}
-        <div className="animate-fade-up" style={{ animationDelay: "160ms" }}>
-          <BetaSignupForm />
-        </div>
-      </div>
+    <main className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-6 py-16">
+      <BetaSection />
     </main>
   );
 }

@@ -53,14 +53,18 @@ export default function BetaSignupForm() {
       className="flex flex-col gap-2.5"
     >
       {status === "success" ? (
-        <div className="w-full bg-emerald-50 border border-emerald-100 rounded-xl px-5 py-3 flex flex-col items-center justify-center min-h-[86px]">
+        <div className="w-full bg-emerald-50 dark:bg-emerald-950 border border-emerald-100 dark:border-emerald-900 rounded-xl px-5 py-3 flex flex-col items-center justify-center min-h-[86px]">
           <div className="flex flex-col items-center gap-1.5">
-            <CheckCircle2 size={20} className="text-emerald-500" strokeWidth={1.75} />
-            <p className="text-[16px] font-medium text-emerald-700">
+            <CheckCircle2
+              size={20}
+              className="text-emerald-500"
+              strokeWidth={1.75}
+            />
+            <p className="text-[16px] font-semibold text-emerald-700 dark:text-emerald-400">
               대기 명단에 추가되었어요
             </p>
           </div>
-          <p className="text-[13px] text-zinc-400 mt-2">
+          <p className="text-[13px] text-zinc-400 dark:text-zinc-300 mt-2">
             베타 오픈 시 가장 먼저 알려드릴게요.
           </p>
         </div>
@@ -73,12 +77,12 @@ export default function BetaSignupForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={status === "loading"}
-            className="w-full bg-white border border-zinc-200 rounded-lg px-4 py-3 text-[14px] text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-zinc-400 transition-colors disabled:opacity-50"
+            className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg px-4 py-3 text-[14px] text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 outline-none focus:border-zinc-400 dark:focus:border-zinc-500 transition-colors disabled:opacity-50"
           />
           <button
             type="submit"
             disabled={status === "loading"}
-            className="w-full bg-zinc-900 text-white rounded-lg px-4 py-3 text-[14px] font-medium hover:bg-zinc-700 transition-colors disabled:opacity-50"
+            className="w-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-lg px-4 py-3 text-[14px] font-medium hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors disabled:opacity-50"
           >
             {status === "loading" ? "신청 중…" : "베타테스터 신청하기"}
           </button>
@@ -95,8 +99,10 @@ export default function BetaSignupForm() {
       )}
 
       {/* Beta 현황 */}
-      <p className="text-[12px] text-zinc-400 text-center pt-3">
-        <span className="text-zinc-900 font-semibold">{remaining}</span>
+      <p className="text-[12px] text-zinc-400 dark:text-zinc-500 text-center pt-3">
+        <span className="text-zinc-900 dark:text-zinc-100 font-semibold">
+          {remaining}
+        </span>
         {" / "}
         {BETA_SLOTS} 자리 남음
       </p>
