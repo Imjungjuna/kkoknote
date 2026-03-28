@@ -1,4 +1,5 @@
 import BetaSection from "@/components/BetaSection";
+import { PixelAnimation } from "@/components/ui/pixel-animation";
 import WidgetMockup from "@/components/landing/WidgetMockup";
 
 const PAIN_POINTS = [
@@ -44,55 +45,78 @@ const FEATURES = [
 export default function HomePage() {
   return (
     <main className="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen">
-      {/* Nav */}
-      <nav className="max-w-2xl mx-auto px-6 pt-8 pb-4 flex items-center justify-between">
-        <span className="text-[13px] font-semibold tracking-tight">
-          KkokNote
-        </span>
-        <a
-          href="/join-betaTesters"
-          className="text-[12px] text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-        >
-          베타 신청 →
-        </a>
-      </nav>
+      {/* Hero — full viewport with pixel background */}
+      <section className="relative min-h-screen overflow-hidden flex flex-col">
+        {/* Pixel animation background */}
+        <div className="absolute inset-0">
+          <PixelAnimation
+            pixelGap={12}
+            animationSpeed={0.2}
+            colorHueStart={200}
+            colorHueRange={120}
+            maxPixelSize={4}
+            animationDuration={900}
+          />
+        </div>
+        {/* Bottom fade into page */}
+        <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-zinc-50 dark:from-zinc-950 to-transparent pointer-events-none" />
 
-      {/* Hero */}
-      <section className="max-w-2xl mx-auto px-6 pt-20 pb-20">
-        <p className="animate-fade-up text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
-          Coming Soon · 베타 모집 중
-        </p>
-        <h1
-          className="animate-fade-up text-[2.75rem] leading-[1.1] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-5"
-          style={{ animationDelay: "60ms" }}
-        >
-          유저 피드백,
-          <br />
-          지금 바로 시작하세요.
-        </h1>
-        <p
-          className="animate-fade-up text-[17px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-md mb-10"
-          style={{ animationDelay: "120ms" }}
-        >
-          스크립트 태그 하나로 5분 안에 설치해서 피드백 보드, 투표, 체인지로그를
-          한 번에 해결.
-        </p>
-        <div
-          className="animate-fade-up flex items-center gap-4"
-          style={{ animationDelay: "180ms" }}
-        >
+        {/* Nav */}
+        <nav className="relative z-10 max-w-2xl mx-auto w-full px-6 pt-8 pb-4 flex items-center justify-between">
+          <span className="text-[13px] font-semibold tracking-tight">
+            KkokNote
+          </span>
           <a
             href="/join-betaTesters"
-            className="bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[14px] font-medium px-5 py-2.5 rounded-lg hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors"
+            className="text-[12px] text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
           >
-            베타 신청하기
+            베타 신청 →
           </a>
-          <a
-            href="#demo"
-            className="text-[14px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
-          >
-            위젯 미리보기 ↓
-          </a>
+        </nav>
+
+        {/* Hero content */}
+        <div className="relative z-10 flex-1 flex items-center">
+          <div className="max-w-2xl mx-auto w-full px-6 py-20">
+            {/* Backdrop blur applied only around text — keeps animation visible outside */}
+            <div className="inline-block rounded-2xl px-8 py-10 -mx-8">
+              <p className="animate-fade-up text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
+                Coming Soon · 베타 모집 중
+              </p>
+              <h1
+                className="animate-fade-up text-[2.75rem] md:text-[4rem] leading-[1.1] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-5 md:mb-7"
+                style={{ animationDelay: "60ms" }}
+              >
+                저 점 하나하나가
+                <br />
+                유저 피드백입니다.
+              </h1>
+              <p
+                className="animate-fade-up text-[17px] md:text-[19px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-md mb-10 md:mb-12 md:leading-[1.7]"
+                style={{ animationDelay: "120ms" }}
+              >
+                KkokNote가 흩어진 피드백을 모아드립니다.
+                <br />
+                스크립트 태그 하나로 5분 안에 시작하세요.
+              </p>
+              <div
+                className="animate-fade-up flex items-center gap-4"
+                style={{ animationDelay: "180ms" }}
+              >
+                <a
+                  href="/join-betaTesters"
+                  className="bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[14px] md:text-[15px] font-medium px-5 py-2.5 md:px-6 md:py-3 rounded-lg hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors"
+                >
+                  베타 신청하기
+                </a>
+                <a
+                  href="#demo"
+                  className="text-[14px] md:text-[15px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
+                >
+                  위젯 미리보기 ↓
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
