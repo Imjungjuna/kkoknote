@@ -28156,14 +28156,14 @@ ${suffix}`;
   var resolveHeadersConstructor = () => {
     return Headers;
   };
-  var fetchWithAuth = (supabaseKey, getAccessToken, customFetch) => {
+  var fetchWithAuth = (supabaseKey2, getAccessToken, customFetch) => {
     const fetch$1 = resolveFetch4(customFetch);
     const HeadersConstructor = resolveHeadersConstructor();
     return async (input, init) => {
       var _await$getAccessToken;
-      const accessToken = (_await$getAccessToken = await getAccessToken()) !== null && _await$getAccessToken !== void 0 ? _await$getAccessToken : supabaseKey;
+      const accessToken = (_await$getAccessToken = await getAccessToken()) !== null && _await$getAccessToken !== void 0 ? _await$getAccessToken : supabaseKey2;
       let headers = new HeadersConstructor(init === null || init === void 0 ? void 0 : init.headers);
-      if (!headers.has("apikey")) headers.set("apikey", supabaseKey);
+      if (!headers.has("apikey")) headers.set("apikey", supabaseKey2);
       if (!headers.has("Authorization")) headers.set("Authorization", `Bearer ${accessToken}`);
       return fetch$1(input, _objectSpread23(_objectSpread23({}, init), {}, { headers }));
     };
@@ -28187,8 +28187,8 @@ ${suffix}`;
     else delete result.accessToken;
     return result;
   }
-  function validateSupabaseUrl(supabaseUrl) {
-    const trimmedUrl = supabaseUrl === null || supabaseUrl === void 0 ? void 0 : supabaseUrl.trim();
+  function validateSupabaseUrl(supabaseUrl2) {
+    const trimmedUrl = supabaseUrl2 === null || supabaseUrl2 === void 0 ? void 0 : supabaseUrl2.trim();
     if (!trimmedUrl) throw new Error("supabaseUrl is required.");
     if (!trimmedUrl.match(/^https?:\/\//i)) throw new Error("Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL.");
     try {
@@ -28390,12 +28390,12 @@ ${suffix}`;
     * const { data } = await supabase.from('profiles').select('*')
     * ```
     */
-    constructor(supabaseUrl, supabaseKey, options) {
+    constructor(supabaseUrl2, supabaseKey2, options) {
       var _settings$auth$storag, _settings$global$head;
-      this.supabaseUrl = supabaseUrl;
-      this.supabaseKey = supabaseKey;
-      const baseUrl = validateSupabaseUrl(supabaseUrl);
-      if (!supabaseKey) throw new Error("supabaseKey is required.");
+      this.supabaseUrl = supabaseUrl2;
+      this.supabaseKey = supabaseKey2;
+      const baseUrl = validateSupabaseUrl(supabaseUrl2);
+      if (!supabaseKey2) throw new Error("supabaseKey is required.");
       this.realtimeUrl = new URL("realtime/v1", baseUrl);
       this.realtimeUrl.protocol = this.realtimeUrl.protocol.replace("http", "ws");
       this.authUrl = new URL("auth/v1", baseUrl);
@@ -28420,7 +28420,7 @@ ${suffix}`;
           throw new Error(`@supabase/supabase-js: Supabase Client is configured with the accessToken option, accessing supabase.auth.${String(prop)} is not possible`);
         } });
       }
-      this.fetch = fetchWithAuth(supabaseKey, this._getAccessToken.bind(this), settings.global.fetch);
+      this.fetch = fetchWithAuth(supabaseKey2, this._getAccessToken.bind(this), settings.global.fetch);
       this.realtime = this._initRealtimeClient(_objectSpread23({
         headers: this.headers,
         accessToken: this._getAccessToken.bind(this)
@@ -28572,8 +28572,8 @@ ${suffix}`;
       }
     }
   };
-  var createClient = (supabaseUrl, supabaseKey, options) => {
-    return new SupabaseClient(supabaseUrl, supabaseKey, options);
+  var createClient = (supabaseUrl2, supabaseKey2, options) => {
+    return new SupabaseClient(supabaseUrl2, supabaseKey2, options);
   };
   function shouldShowDeprecationWarning() {
     if (typeof window !== "undefined") return false;
@@ -29088,13 +29088,13 @@ ${suffix}`;
 
   // node_modules/@supabase/ssr/dist/module/createBrowserClient.js
   var cachedBrowserClient;
-  function createBrowserClient(supabaseUrl, supabaseKey, options) {
+  function createBrowserClient(supabaseUrl2, supabaseKey2, options) {
     var _a2, _b, _c, _d, _e;
     const shouldUseSingleton = (options == null ? void 0 : options.isSingleton) === true || (!options || !("isSingleton" in options)) && isBrowser2();
     if (shouldUseSingleton && cachedBrowserClient) {
       return cachedBrowserClient;
     }
-    if (!supabaseUrl || !supabaseKey) {
+    if (!supabaseUrl2 || !supabaseKey2) {
       throw new Error(`@supabase/ssr: Your project's URL and API key are required to create a Supabase client!
 
 Check your Supabase project's API settings to find these values
@@ -29104,7 +29104,7 @@ https://supabase.com/dashboard/project/_/settings/api`);
     const { storage } = createStorageFromOptions(__spreadProps(__spreadValues({}, options), {
       cookieEncoding: (_a2 = options == null ? void 0 : options.cookieEncoding) != null ? _a2 : "base64url"
     }), false);
-    const client = createClient(supabaseUrl, supabaseKey, __spreadProps(__spreadValues({}, options), {
+    const client = createClient(supabaseUrl2, supabaseKey2, __spreadProps(__spreadValues({}, options), {
       global: __spreadProps(__spreadValues({}, options == null ? void 0 : options.global), {
         headers: __spreadProps(__spreadValues({}, (_b = options == null ? void 0 : options.global) == null ? void 0 : _b.headers), {
           "X-Client-Info": `supabase-ssr/${VERSION} createBrowserClient`
@@ -29160,12 +29160,9 @@ https://supabase.com/dashboard/project/_/settings/api`);
   }
 
   // lib/supabase/client.ts
-  function createClient2() {
-    return createBrowserClient(
-      "",
-      ""
-    );
-  }
+  var supabaseUrl = "";
+  var supabaseKey = "";
+  var createClient2 = () => createBrowserClient(supabaseUrl, supabaseKey);
 
   // src/store/useWidgetStore.ts
   var useWidgetStore = create((set, get2) => ({
@@ -29173,23 +29170,28 @@ https://supabase.com/dashboard/project/_/settings/api`);
     themeColor: null,
     identifiedUser: null,
     feedbacks: [],
+    updates: [],
     realtimeReady: false,
     isVoting: false,
     initWidget: async (projectKey) => {
-      var _a2;
       set({ projectKey, realtimeReady: false });
       try {
         const raw = localStorage.getItem("kkoknote:identify");
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (parsed == null ? void 0 : parsed.id) {
-            set({
-              identifiedUser: {
-                id: parsed.id,
-                email: (_a2 = parsed.email) != null ? _a2 : null
-              }
-            });
-          }
+        const parsed = raw ? JSON.parse(raw) : null;
+        const existingId = parsed && typeof parsed.id === "string" ? parsed.id : null;
+        const existingEmail = parsed && typeof parsed.email === "string" ? parsed.email : null;
+        if (existingId) {
+          set({
+            identifiedUser: {
+              id: existingId,
+              email: existingEmail
+            }
+          });
+        } else {
+          const anonId = generateAnonId();
+          const next = { id: anonId, email: null };
+          localStorage.setItem("kkoknote:identify", JSON.stringify(next));
+          set({ identifiedUser: { id: anonId, email: null } });
         }
       } catch (e) {
       }
@@ -29203,7 +29205,7 @@ https://supabase.com/dashboard/project/_/settings/api`);
       } catch (e) {
         set({ themeColor: "#111827" });
       }
-      await get2().fetchInitial();
+      await Promise.all([get2().fetchInitial(), get2().fetchUpdates()]);
     },
     identify: (args) => {
       var _a2;
@@ -29214,6 +29216,55 @@ https://supabase.com/dashboard/project/_/settings/api`);
           JSON.stringify({ id: args.id, email: (_a2 = args.email) != null ? _a2 : null })
         );
       } catch (e) {
+      }
+    },
+    createFeedback: async (content) => {
+      var _a2;
+      const projectKey = get2().projectKey;
+      if (!projectKey) return;
+      const userId = (_a2 = get2().identifiedUser) == null ? void 0 : _a2.id;
+      if (!userId) return;
+      const trimmed = content.trim();
+      if (!trimmed) return;
+      const tempId = `temp-${Date.now()}`;
+      set({
+        feedbacks: [
+          {
+            id: tempId,
+            content: trimmed,
+            status: "pending",
+            upvotes: 0
+          },
+          ...get2().feedbacks
+        ]
+      });
+      try {
+        const supabase = createClient2();
+        const { data, error } = await supabase.from("feedbacks").insert({
+          project_id: projectKey,
+          content: trimmed,
+          status: "pending",
+          upvotes: 0,
+          user_identifier: userId
+        }).select("id, content, status, upvotes").single();
+        if (error) throw error;
+        const rec = data;
+        set({
+          feedbacks: get2().feedbacks.map(
+            (f) => {
+              var _a3, _b, _c;
+              return f.id === tempId ? {
+                id: String(rec.id),
+                content: String((_a3 = rec.content) != null ? _a3 : trimmed),
+                status: (_b = rec.status) != null ? _b : "pending",
+                upvotes: Number((_c = rec.upvotes) != null ? _c : 0)
+              } : f;
+            }
+          )
+        });
+      } catch (e) {
+        set({ feedbacks: get2().feedbacks.filter((f) => f.id !== tempId) });
+        throw new Error("\uD53C\uB4DC\uBC31 \uC81C\uCD9C\uC5D0 \uC2E4\uD328\uD588\uC5B4");
       }
     },
     fetchInitial: async () => {
@@ -29235,6 +29286,23 @@ https://supabase.com/dashboard/project/_/settings/api`);
         };
       });
       set({ feedbacks });
+    },
+    fetchUpdates: async () => {
+      const projectKey = get2().projectKey;
+      if (!projectKey) return;
+      const supabase = createClient2();
+      const { data, error } = await supabase.from("updates").select("id, title, content, created_at").eq("project_id", projectKey).order("created_at", { ascending: false }).limit(20);
+      if (error) return;
+      const updates = (data != null ? data : []).map((x) => {
+        const rec = x;
+        return {
+          id: String(rec.id),
+          title: String(rec.title),
+          content: String(rec.content),
+          created_at: String(rec.created_at)
+        };
+      });
+      set({ updates });
     },
     vote: async (_feedbackId) => {
       var _a2;
@@ -29265,25 +29333,53 @@ https://supabase.com/dashboard/project/_/settings/api`);
       }
     },
     applyRealtimeUpdate: (payload) => {
-      var _a2, _b;
+      var _a2, _b, _c, _d;
       const p = payload;
       const nextRow = (_b = (_a2 = p == null ? void 0 : p.new) != null ? _a2 : p == null ? void 0 : p.record) != null ? _b : null;
-      const id = (nextRow == null ? void 0 : nextRow.id) ? String(nextRow.id) : null;
+      if (!nextRow) return;
+      const idValue = nextRow.id;
+      const id = idValue ? String(idValue) : null;
       if (!id) return;
+      const nextFeedback = {
+        id,
+        content: nextRow.content !== void 0 ? String(nextRow.content) : "",
+        status: (_c = nextRow.status) != null ? _c : "pending",
+        upvotes: nextRow.upvotes !== void 0 ? Number((_d = nextRow.upvotes) != null ? _d : 0) : 0
+      };
       set({
         feedbacks: get2().feedbacks.some((f) => f.id === id) ? get2().feedbacks.map(
           (f) => {
             var _a3, _b2;
             return f.id === id ? __spreadProps(__spreadValues({}, f), {
               content: nextRow.content !== void 0 ? String(nextRow.content) : f.content,
-              status: (_a3 = nextRow.status) != null ? _a3 : f.status,
+              status: (_a3 = nextFeedback.status) != null ? _a3 : f.status,
               upvotes: nextRow.upvotes !== void 0 ? Number((_b2 = nextRow.upvotes) != null ? _b2 : 0) : f.upvotes
             }) : f;
           }
-        ) : get2().feedbacks
+        ) : (() => {
+          const temps = get2().feedbacks;
+          const tempIdx = temps.findIndex(
+            (f) => f.id.startsWith("temp-") && f.content === nextFeedback.content && f.status === "pending" && f.upvotes === 0
+          );
+          if (tempIdx >= 0) {
+            const next = [...temps];
+            next[tempIdx] = nextFeedback;
+            return next;
+          }
+          return [nextFeedback, ...temps];
+        })()
       });
     }
   }));
+  function generateAnonId() {
+    try {
+      if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+        return crypto.randomUUID();
+      }
+    } catch (e) {
+    }
+    return `anon-${Math.random().toString(36).slice(2)}-${Date.now().toString(36)}`;
+  }
 
   // components/widget/WidgetLoader.tsx
   var import_react3 = __toESM(require_react());
@@ -29296,40 +29392,231 @@ https://supabase.com/dashboard/project/_/settings/api`);
     const initWidget = useWidgetStore((s) => s.initWidget);
     const identifiedUser = useWidgetStore((s) => s.identifiedUser);
     const applyRealtimeUpdate = useWidgetStore((s) => s.applyRealtimeUpdate);
+    const feedbacks = useWidgetStore((s) => s.feedbacks);
+    const updates = useWidgetStore((s) => s.updates);
+    const createFeedback = useWidgetStore((s) => s.createFeedback);
+    const vote = useWidgetStore((s) => s.vote);
     (0, import_react2.useEffect)(() => {
       void initWidget(projectKey);
     }, [initWidget, projectKey]);
+    const [isOpen, setIsOpen] = (0, import_react2.useState)(false);
+    const [activeTab, setActiveTab] = (0, import_react2.useState)("feedback");
+    const [draft, setDraft] = (0, import_react2.useState)("");
+    const [submitInFlight, setSubmitInFlight] = (0, import_react2.useState)(false);
+    const [voteInFlightForId, setVoteInFlightForId] = (0, import_react2.useState)(null);
+    const [submitRemainingSec, setSubmitRemainingSec] = (0, import_react2.useState)(0);
+    const [voteRemainingSec, setVoteRemainingSec] = (0, import_react2.useState)(0);
+    const [toastMsg, setToastMsg] = (0, import_react2.useState)(null);
+    const submitQueueRef = (0, import_react2.useRef)([]);
+    const voteQueueRef = (0, import_react2.useRef)([]);
+    const showToast = (msg) => {
+      setToastMsg(msg);
+      window.setTimeout(() => {
+        setToastMsg((prev) => prev === msg ? null : prev);
+      }, 2500);
+    };
+    const consumeRate = (queueRef, nowMs) => {
+      var _a2;
+      const windowMs = 6e4;
+      const limit = 5;
+      const q = queueRef.current;
+      const cutoff = nowMs - windowMs;
+      while (q.length > 0 && q[0] < cutoff) q.shift();
+      if (q.length >= limit) {
+        const earliest = (_a2 = q[0]) != null ? _a2 : nowMs;
+        const remainingMs = windowMs - (nowMs - earliest);
+        const remainingSec = Math.max(1, Math.ceil(remainingMs / 1e3));
+        return { allowed: false, remainingSec };
+      }
+      q.push(nowMs);
+      return { allowed: true, remainingSec: 0 };
+    };
+    const voteLocalKey = (feedbackId) => `kkoknote:votes:${projectKey}:${feedbackId}`;
+    const disabledBecauseRate = (0, import_react2.useMemo)(
+      () => ({ submit: submitRemainingSec > 0, vote: voteRemainingSec > 0 }),
+      [submitRemainingSec, voteRemainingSec]
+    );
+    (0, import_react2.useEffect)(() => {
+      if (submitRemainingSec <= 0) return;
+      const t = window.setInterval(() => setSubmitRemainingSec((s) => Math.max(0, s - 1)), 1e3);
+      return () => window.clearInterval(t);
+    }, [submitRemainingSec]);
+    (0, import_react2.useEffect)(() => {
+      if (voteRemainingSec <= 0) return;
+      const t = window.setInterval(() => setVoteRemainingSec((s) => Math.max(0, s - 1)), 1e3);
+      return () => window.clearInterval(t);
+    }, [voteRemainingSec]);
+    const onSubmitFeedback = async () => {
+      if (submitInFlight) return;
+      const content = draft.trim();
+      if (!content) {
+        showToast("\uB0B4\uC6A9\uC744 \uC785\uB825\uD574\uC918");
+        return;
+      }
+      const now = Date.now();
+      const res = consumeRate(submitQueueRef, now);
+      if (!res.allowed) {
+        setSubmitRemainingSec(res.remainingSec);
+        showToast("\uB108\uBB34 \uC790\uC8FC \uBCF4\uB0C8\uC5B4. \uC7A0\uC2DC\uB9CC \uC26C\uC5B4\uC918");
+        return;
+      }
+      setSubmitInFlight(true);
+      try {
+        await createFeedback(content);
+        setDraft("");
+        showToast("\uC81C\uCD9C \uC644\uB8CC");
+      } catch (e) {
+        showToast("\uC81C\uCD9C\uC5D0 \uC2E4\uD328\uD588\uC5B4");
+      } finally {
+        setSubmitInFlight(false);
+      }
+    };
+    const onVote = async (feedbackId) => {
+      if (voteInFlightForId === feedbackId) return;
+      try {
+        if (localStorage.getItem(voteLocalKey(feedbackId))) {
+          showToast("\uC774\uBBF8 \uD22C\uD45C\uD588\uC5B4");
+          return;
+        }
+      } catch (e) {
+      }
+      const now = Date.now();
+      const res = consumeRate(voteQueueRef, now);
+      if (!res.allowed) {
+        setVoteRemainingSec(res.remainingSec);
+        showToast("\uB108\uBB34 \uC790\uC8FC \uBCF4\uB0C8\uC5B4. \uC7A0\uC2DC\uB9CC \uC26C\uC5B4\uC918");
+        return;
+      }
+      setVoteInFlightForId(feedbackId);
+      try {
+        await vote(feedbackId);
+      } catch (e) {
+        showToast("\uD22C\uD45C\uC5D0 \uC2E4\uD328\uD588\uC5B4");
+      } finally {
+        setVoteInFlightForId(null);
+      }
+    };
     (0, import_react2.useEffect)(() => {
       const supabase = createClient2();
-      const channel = supabase.channel(`kkoknote:feedbacks:${projectKey}`).on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "feedbacks",
-          filter: `project_id=eq.${projectKey}`
-        },
-        (payload) => {
-          applyRealtimeUpdate(payload);
-        }
-      ).subscribe();
+      const channel = supabase.channel(`kkoknote:feedbacks:${projectKey}`).on("postgres_changes", { event: "UPDATE", schema: "public", table: "feedbacks", filter: `project_id=eq.${projectKey}` }, (payload) => applyRealtimeUpdate(payload)).on("postgres_changes", { event: "INSERT", schema: "public", table: "feedbacks", filter: `project_id=eq.${projectKey}` }, (payload) => applyRealtimeUpdate(payload)).subscribe();
       return () => {
         supabase.removeChannel(channel);
       };
     }, [applyRealtimeUpdate, projectKey]);
-    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "kkoknote-widget", children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { padding: 10 }, children: [
+    const statusLabel = (s) => {
+      if (s === "pending") return "\uB300\uAE30\uC911";
+      if (s === "progress") return "\uAC1C\uBC1C\uC911";
+      if (s === "done") return "\uC644\uB8CC";
+      return s;
+    };
+    const formatDate = (iso) => {
+      try {
+        return new Date(iso).toLocaleDateString("ko-KR", { year: "numeric", month: "short", day: "numeric" });
+      } catch (e) {
+        return iso;
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "kkoknote-host", children: [
+      isOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "kkoknote-panel", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "kkoknote-panel-header", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "kkoknote-panel-title", children: "\uCF55\uB178\uD2B8" }),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "kkoknote-panel-user", children: identifiedUser ? identifiedUser.id.slice(0, 8) : "\uC775\uBA85" })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "kkoknote-tab-bar", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            "button",
+            {
+              type: "button",
+              className: `kkoknote-tab${activeTab === "feedback" ? " active" : ""}`,
+              onClick: () => setActiveTab("feedback"),
+              children: "\uD53C\uB4DC\uBC31"
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+            "button",
+            {
+              type: "button",
+              className: `kkoknote-tab${activeTab === "updates" ? " active" : ""}`,
+              onClick: () => setActiveTab("updates"),
+              children: "\uC5C5\uB370\uC774\uD2B8"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "kkoknote-panel-inner", children: [
+          toastMsg && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "kkoknote-toast", role: "status", children: toastMsg }),
+          activeTab === "feedback" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 12 }, children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "textarea",
+                {
+                  className: "kkoknote-textarea",
+                  value: draft,
+                  onChange: (e) => setDraft(e.target.value),
+                  placeholder: "\uBC84\uADF8 \uB9AC\uD3EC\uD2B8\uB098 \uC544\uC774\uB514\uC5B4\uB97C \uB0A8\uACA8\uC8FC\uC138\uC694",
+                  rows: 3,
+                  disabled: submitInFlight
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginTop: 8, display: "flex", justifyContent: "flex-end" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                "button",
+                {
+                  type: "button",
+                  className: "kkoknote-button",
+                  onClick: () => void onSubmitFeedback(),
+                  disabled: submitInFlight || disabledBecauseRate.submit,
+                  children: submitInFlight ? "\uC81C\uCD9C \uC911..." : disabledBecauseRate.submit ? `${submitRemainingSec}s \uD6C4 \uAC00\uB2A5` : "\uC81C\uCD9C"
+                }
+              ) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }, children: [
+              feedbacks.map((f) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "kkoknote-feedback-card", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: `kkoknote-status-badge ${f.status}`, children: statusLabel(f.status) }) }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: 12, whiteSpace: "pre-wrap", lineHeight: 1.45, color: "#374151" }, children: f.content }),
+                /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 8, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 8 }, children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { style: { fontSize: 12, color: "#6b7280" }, children: [
+                    "\u25B2 ",
+                    f.upvotes
+                  ] }),
+                  /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+                    "button",
+                    {
+                      type: "button",
+                      className: "kkoknote-button",
+                      onClick: () => void onVote(f.id),
+                      disabled: voteInFlightForId === f.id || disabledBecauseRate.vote,
+                      style: { padding: "4px 10px", fontSize: 11 },
+                      children: voteInFlightForId === f.id ? "..." : disabledBecauseRate.vote ? `${voteRemainingSec}s` : "\uD22C\uD45C"
+                    }
+                  )
+                ] })
+              ] }, f.id)),
+              feedbacks.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "kkoknote-empty", children: "\uC544\uC9C1 \uD53C\uB4DC\uBC31\uC774 \uC5C6\uC5B4\uC694." })
+            ] })
+          ] }),
+          activeTab === "updates" && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: 12, display: "flex", flexDirection: "column", gap: 0 }, children: [
+            updates.map((u) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { className: "kkoknote-update-item", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "kkoknote-update-title", children: u.title }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "kkoknote-update-date", children: formatDate(u.created_at) }),
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "kkoknote-update-body", children: u.content })
+            ] }, u.id)),
+            updates.length === 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "kkoknote-empty", children: "\uC5C5\uB370\uC774\uD2B8 \uB0B4\uC5ED\uC774 \uC5C6\uC5B4\uC694." })
+          ] })
+        ] })
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
         "button",
         {
           type: "button",
-          className: "kkoknote-button",
-          onClick: () => {
-          },
-          children: "\uCF55\uB178\uD2B8"
+          className: "kkoknote-toggle-btn",
+          onClick: () => setIsOpen((o) => !o),
+          "aria-label": isOpen ? "\uC704\uC82F \uB2EB\uAE30" : "\uD53C\uB4DC\uBC31 \uB0A8\uAE30\uAE30",
+          children: isOpen ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.5", strokeLinecap: "round", strokeLinejoin: "round", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", { x1: "18", y1: "6", x2: "6", y2: "18" }),
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", { x1: "6", y1: "6", x2: "18", y2: "18" })
+          ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" }) })
         }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginTop: 8, fontSize: 11, opacity: 0.75 }, children: identifiedUser ? `\uC2DD\uBCC4\uB428: ${identifiedUser.id}` : "\uC775\uBA85 \uC0C1\uD0DC" })
-    ] }) });
+      )
+    ] });
   }
 
   // components/widget/WidgetLoader.tsx
@@ -29337,18 +29624,162 @@ https://supabase.com/dashboard/project/_/settings/api`);
   var WIDGET_STYLE = `
 /* Widget-only styles (Shadow DOM scoped). */
 :host, * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
-.kkoknote-widget { display: inline-block; }
+
+.kkoknote-host {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483647;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.kkoknote-toggle-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #111827;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+  flex-shrink: 0;
+  transition: transform 0.15s, background 0.15s;
+}
+.kkoknote-toggle-btn:hover { background: #374151; transform: scale(1.06); }
+.kkoknote-toggle-btn:active { transform: scale(0.96); }
+.kkoknote-toggle-btn svg { width: 22px; height: 22px; }
+
+.kkoknote-panel {
+  width: 340px;
+  max-height: 520px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  overflow: hidden;
+  animation: kkok-slidein 0.18s ease;
+}
+@keyframes kkok-slidein {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.kkoknote-panel-inner {
+  overflow-y: auto;
+  flex: 1;
+  padding: 16px;
+}
+
+.kkoknote-tab-bar {
+  display: flex;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 0 16px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.kkoknote-tab {
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.12s;
+}
+.kkoknote-tab:hover { color: #111827; }
+.kkoknote-tab.active { color: #111827; border-bottom-color: #111827; }
+
+.kkoknote-panel-header {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px 0;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.kkoknote-panel-title { font-weight: 700; font-size: 14px; color: #111827; }
+.kkoknote-panel-user { margin-left: auto; font-size: 11px; color: #9ca3af; }
+
 .kkoknote-button {
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 8px;
-  padding: 8px 10px;
-  background: #000;
+  padding: 7px 12px;
+  background: #111827;
   color: #fff;
   font-size: 12px;
+  font-weight: 500;
   border: none;
   cursor: pointer;
+  transition: background 0.12s;
 }
+.kkoknote-button:hover { background: #374151; }
 .kkoknote-button:active { transform: translateY(1px); }
+.kkoknote-button:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.kkoknote-textarea, .kkoknote-input {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.15);
+  padding: 8px 10px;
+  font-size: 13px;
+  resize: vertical;
+  outline: none;
+  background: #fff;
+  color: #111;
+  transition: border-color 0.12s;
+}
+.kkoknote-textarea:focus, .kkoknote-input:focus {
+  border-color: #111827;
+}
+
+.kkoknote-toast {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.82);
+  color: #fff;
+  font-size: 12px;
+}
+
+.kkoknote-feedback-card {
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 10px 12px;
+  background: #fafafa;
+}
+
+.kkoknote-status-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.kkoknote-status-badge.pending  { background: #f3f4f6; color: #6b7280; }
+.kkoknote-status-badge.progress { background: #eff6ff; color: #3b82f6; }
+.kkoknote-status-badge.done     { background: #f0fdf4; color: #16a34a; }
+
+.kkoknote-update-item {
+  border-left: 2px solid #e5e7eb;
+  padding-left: 12px;
+  padding-bottom: 16px;
+}
+.kkoknote-update-item:last-child { padding-bottom: 0; }
+.kkoknote-update-title { font-size: 13px; font-weight: 600; color: #111827; }
+.kkoknote-update-date  { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+.kkoknote-update-body  { font-size: 12px; color: #374151; margin-top: 6px; white-space: pre-wrap; line-height: 1.5; }
+
+.kkoknote-empty { font-size: 12px; color: #9ca3af; text-align: center; padding: 24px 0; }
 `;
   function WidgetLoader({ projectKey }) {
     const hostRef = (0, import_react3.useRef)(null);

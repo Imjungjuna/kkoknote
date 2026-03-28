@@ -17,9 +17,10 @@ type AdminState = {
 
   loadProjectData: (projectId: string) => Promise<void>;
   setFeedbackStatus: (feedbackId: string, status: AdminFeedback["status"]) => Promise<void>;
+  applyRealtimeEvent: (eventType: "INSERT" | "UPDATE", row: Record<string, unknown>) => void;
 };
 
-export const useAdminStore = create<AdminState>((set) => ({
+export const useAdminStore = create<AdminState>((set, get) => ({
   selectedProjectId: null,
   feedbacks: [],
   updates: [],
@@ -95,6 +96,28 @@ export const useAdminStore = create<AdminState>((set) => ({
         f.id === feedbackId ? { ...f, status } : f
       ),
     });
+  },
+
+  applyRealtimeEvent: (eventType, row) => {
+    const feedback: AdminFeedback = {
+      id: String(row.id),
+      project_id: String(row.project_id),
+      content: String(row.content),
+      status: row.status as AdminFeedback["status"],
+      upvotes: Number(row.upvotes ?? 0),
+    };
+
+    if (eventType === "INSERT") {
+      // 이미 있으면 무시 (optimistic 중복 방지)
+      if (get().feedbacks.some((f) => f.id === feedback.id)) return;
+      set({ feedbacks: [feedback, ...get().feedbacks] });
+    } else {
+      set({
+        feedbacks: get().feedbacks.map((f) =>
+          f.id === feedback.id ? feedback : f
+        ),
+      });
+    }
   },
 }));
 

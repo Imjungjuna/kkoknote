@@ -13,11 +13,19 @@ type WidgetFeedback = {
   upvotes: number;
 };
 
+export type WidgetUpdate = {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+};
+
 type WidgetState = {
   projectKey: string | null;
   themeColor: string | null;
   identifiedUser: IdentifiedUser | null;
   feedbacks: WidgetFeedback[];
+  updates: WidgetUpdate[];
   realtimeReady: boolean;
   isVoting: boolean;
 
@@ -25,6 +33,7 @@ type WidgetState = {
   identify: (args: IdentifiedUser) => void;
   createFeedback: (content: string) => Promise<void>;
   fetchInitial: () => Promise<void>;
+  fetchUpdates: () => Promise<void>;
   vote: (feedbackId: string) => Promise<void>;
   applyRealtimeUpdate: (payload: unknown) => void;
 };
@@ -34,6 +43,7 @@ export const useWidgetStore = create<WidgetState>((set, get) => ({
   themeColor: null,
   identifiedUser: null,
   feedbacks: [],
+  updates: [],
   realtimeReady: false,
   isVoting: false,
 
@@ -81,7 +91,7 @@ export const useWidgetStore = create<WidgetState>((set, get) => ({
       set({ themeColor: "#111827" });
     }
 
-    await get().fetchInitial();
+    await Promise.all([get().fetchInitial(), get().fetchUpdates()]);
   },
 
   identify: (args) => {
@@ -189,6 +199,34 @@ export const useWidgetStore = create<WidgetState>((set, get) => ({
     });
 
     set({ feedbacks });
+  },
+
+  fetchUpdates: async () => {
+    const projectKey = get().projectKey;
+    if (!projectKey) return;
+
+    const supabase = createClient();
+
+    const { data, error } = await supabase
+      .from("updates")
+      .select("id, title, content, created_at")
+      .eq("project_id", projectKey)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (error) return;
+
+    const updates = (data ?? []).map((x) => {
+      const rec = x as unknown as Record<string, unknown>;
+      return {
+        id: String(rec.id),
+        title: String(rec.title),
+        content: String(rec.content),
+        created_at: String(rec.created_at),
+      };
+    });
+
+    set({ updates });
   },
 
   vote: async (_feedbackId) => {
