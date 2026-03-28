@@ -6,11 +6,8 @@ export async function GET(req: NextRequest) {
   const projectKey = url.searchParams.get("projectKey") ?? "";
 
   const origin = req.headers.get("origin") ?? "";
-  const corsHeaders = origin
-    ? {
-        "Access-Control-Allow-Origin": origin,
-        Vary: "Origin",
-      }
+  const corsHeaders: Record<string, string> = origin
+    ? { "Access-Control-Allow-Origin": origin, Vary: "Origin" }
     : {};
   if (!projectKey) {
     return Response.json({ error: "projectKey is required" }, { status: 400, headers: corsHeaders });

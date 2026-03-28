@@ -1,13 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
+import { cookies } from "next/headers";
 import { NextResponse, type NextRequest } from "next/server";
 
 const allowedStatuses = new Set(["pending", "progress", "done"]);
 
 export async function POST(
   req: NextRequest,
-  ctx: { params: { feedbackId: string } }
+  ctx: { params: Promise<{ feedbackId: string }> }
 ) {
-  const { feedbackId } = ctx.params;
+  const { feedbackId } = await ctx.params;
 
   let body: unknown;
   try {
@@ -22,7 +23,7 @@ export async function POST(
     return NextResponse.json({ error: "Invalid status" }, { status: 400 });
   }
 
-  const supabase = await createClient();
+  const supabase = createClient(await cookies());
   const {
     data: { user },
   } = await supabase.auth.getUser();
