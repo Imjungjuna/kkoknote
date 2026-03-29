@@ -62,7 +62,7 @@ export default function HomePage() {
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-zinc-50 dark:from-zinc-950 to-transparent pointer-events-none" />
 
         {/* Nav */}
-        <nav className="relative z-10 max-w-2xl mx-auto w-full px-6 pt-8 pb-4 flex items-center justify-between">
+        <nav className="relative z-10 max-w-4xl mx-auto w-full px-6 pt-8 pb-4 flex items-center justify-between">
           <span className="text-[13px] font-semibold tracking-tight">
             KkokNote
           </span>
@@ -76,14 +76,14 @@ export default function HomePage() {
 
         {/* Hero content */}
         <div className="relative z-10 flex-1 flex items-center">
-          <div className="max-w-2xl mx-auto w-full px-6 py-20">
+          <div className="max-w-4xl mx-auto w-full px-6 py-20">
             {/* Backdrop blur applied only around text — keeps animation visible outside */}
             <div className="inline-block rounded-2xl px-8 py-10 -mx-8">
               <p className="animate-fade-up text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
                 Coming Soon · 베타 모집 중
               </p>
               <h1
-                className="animate-fade-up text-[2.75rem] md:text-[4rem] leading-[1.1] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-5 md:mb-7"
+                className="animate-fade-up text-[2rem] md:text-[3.25rem] leading-[1.1] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-5 md:mb-7"
                 style={{ animationDelay: "60ms" }}
               >
                 저 점 하나하나가
@@ -121,7 +121,7 @@ export default function HomePage() {
       </section>
 
       {/* Pain Points */}
-      <section className="max-w-2xl mx-auto px-6 py-20 border-t border-zinc-100 dark:border-zinc-800">
+      <section className="max-w-4xl mx-auto px-6 py-20 border-t border-zinc-100 dark:border-zinc-800">
         <p className="text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-10">
           Problem
         </p>
@@ -144,7 +144,7 @@ export default function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="max-w-2xl mx-auto px-6 py-20 border-t border-zinc-100 dark:border-zinc-800">
+      <section className="max-w-4xl mx-auto px-6 py-20 border-t border-zinc-100 dark:border-zinc-800">
         <p className="text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-10">
           How it works
         </p>
@@ -170,7 +170,7 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="max-w-2xl mx-auto px-6 py-20 border-t border-zinc-100 dark:border-zinc-800">
+      <section className="max-w-4xl mx-auto px-6 py-20 border-t border-zinc-100 dark:border-zinc-800">
         <p className="text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-10">
           Features
         </p>
@@ -195,7 +195,7 @@ export default function HomePage() {
       {/* Widget Demo */}
       <section
         id="demo"
-        className="max-w-3xl mx-auto px-6 py-20 border-t border-zinc-100 dark:border-zinc-800"
+        className="max-w-4xl mx-auto px-6 py-20 border-t border-zinc-100 dark:border-zinc-800"
       >
         <p className="text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-4">
           Install
@@ -203,7 +203,7 @@ export default function HomePage() {
         <h2 className="text-[1.75rem] font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 mb-8">
           스크립트 태그 하나면 끝.
         </h2>
-        <div className="flex flex-col md:flex-row gap-8 items-start">
+        <div className="flex flex-col md:flex-row gap-8 md:items-start">
           <div className="animate-fade-up flex-1 bg-zinc-900 dark:bg-zinc-800 rounded-xl p-5 overflow-x-auto">
             <pre className="text-[12px] leading-relaxed text-zinc-300 font-mono whitespace-pre">{`<script
   src="https://cdn.kkoknote.com/widget.js"
@@ -212,7 +212,7 @@ export default function HomePage() {
 ></script>`}</pre>
           </div>
           <div
-            className="animate-fade-up animate-float shrink-0 mx-auto md:mx-0"
+            className="animate-fade-up shrink-0 flex justify-center md:block"
             style={{ animationDelay: "100ms" }}
           >
             <WidgetMockup />
@@ -226,7 +226,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="max-w-2xl mx-auto px-6 py-8 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800">
+      <footer className="max-w-4xl mx-auto px-6 py-8 flex items-center justify-between border-t border-zinc-100 dark:border-zinc-800">
         <span className="text-[12px] text-zinc-300 dark:text-zinc-600">
           © 2026 KkokNote
         </span>

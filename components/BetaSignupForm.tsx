@@ -1,19 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 type Status = "idle" | "loading" | "success" | "duplicate" | "error";
 
 const BETA_SLOTS = 50;
-const INITIAL_REMAINING = 13; // TODO: replace with real count from DB
+
+const remainingPromise = createClient()
+  .from("beta_registrations")
+  .select("*", { count: "exact", head: true })
+  .then(({ count }) => Math.max(0, BETA_SLOTS - (count ?? 0)));
 
 export default function BetaSignupForm() {
+  const initialRemaining = use(remainingPromise);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [remaining, setRemaining] = useState(INITIAL_REMAINING);
+  const [remaining, setRemaining] = useState(initialRemaining);
 
   return (
     <form
@@ -100,9 +105,7 @@ export default function BetaSignupForm() {
 
       {/* Beta 현황 */}
       <p className="text-[12px] text-zinc-400 dark:text-zinc-500 text-center pt-3">
-        <span className="text-zinc-900 dark:text-zinc-100 font-semibold">
-          {remaining}
-        </span>
+        <span className="text-zinc-900 dark:text-zinc-100 font-semibold">{remaining}</span>
         {" / "}
         {BETA_SLOTS} 자리 남음
       </p>

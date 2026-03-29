@@ -31,6 +31,16 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-18047823215');
+    `,
+          }}
+        />
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

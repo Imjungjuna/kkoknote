@@ -1,4 +1,15 @@
+import { Suspense } from "react";
 import BetaSignupForm from "@/components/BetaSignupForm";
+
+function BetaSignupFormFallback() {
+  return (
+    <div className="flex flex-col gap-2.5">
+      <div className="h-[46px] rounded-lg bg-zinc-100 dark:bg-zinc-800 animate-pulse" />
+      <div className="h-[46px] rounded-lg bg-zinc-100 dark:bg-zinc-800 animate-pulse" />
+      <p className="text-[12px] text-zinc-300 dark:text-zinc-700 text-center pt-3">— / 50 자리 남음</p>
+    </div>
+  );
+}
 
 const features = [
   "스크립트 태그 하나로 설치 완료 — 백엔드 불필요",
@@ -56,7 +67,9 @@ export default function BetaSection({
 
       {/* Form */}
       <div className="animate-fade-up" style={{ animationDelay: "160ms" }}>
-        <BetaSignupForm />
+        <Suspense fallback={<BetaSignupFormFallback />}>
+          <BetaSignupForm />
+        </Suspense>
       </div>
     </div>
   );
