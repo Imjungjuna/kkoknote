@@ -63,12 +63,12 @@ export default function HomePage() {
 
         {/* Nav */}
         <nav className="relative z-10 max-w-4xl mx-auto w-full px-6 pt-8 pb-4 flex items-center justify-between">
-          <span className="text-[13px] font-semibold tracking-tight">
+          <span className="bg-zinc-950/80 rounded-lg text-[13px] font-semibold tracking-tight">
             KkokNote
           </span>
           <a
             href="/join-betaTesters"
-            className="text-[12px] text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+            className="bg-zinc-950/80 rounded-lg text-[12px] text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
           >
             베타 신청 →
           </a>
@@ -78,12 +78,15 @@ export default function HomePage() {
         <div className="relative z-10 flex-1 flex items-center">
           <div className="max-w-4xl mx-auto w-full px-6 py-20">
             {/* Backdrop blur applied only around text — keeps animation visible outside */}
-            <div className="inline-block rounded-2xl px-8 py-10 -mx-8">
-              <p className="animate-fade-up text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
-                Coming Soon · 베타 모집 중
+            <div className="w-fit px-8 py-10 -mx-8">
+              <p className=" animate-fade-up text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
+                <span className="bg-zinc-950/80 rounded-lg">
+                  {" "}
+                  Coming Soon · 베타 모집 중
+                </span>
               </p>
               <h1
-                className="animate-fade-up text-[2rem] md:text-[3.25rem] leading-[1.1] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-5 md:mb-7"
+                className="bg-zinc-950/60 rounded-xl animate-fade-up text-[2rem] md:text-[3.25rem] leading-[1.1] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-5 md:mb-7"
                 style={{ animationDelay: "60ms" }}
               >
                 저 점 하나하나가
@@ -91,7 +94,7 @@ export default function HomePage() {
                 유저 피드백입니다.
               </h1>
               <p
-                className="animate-fade-up text-[17px] md:text-[19px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-md mb-10 md:mb-12 md:leading-[1.7]"
+                className="animate-fade-up bg-zinc-950/65 rounded-xl text-[17px] md:text-[19px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-md mb-10 md:mb-12 md:leading-[1.7]"
                 style={{ animationDelay: "120ms" }}
               >
                 KkokNote가 흩어진 피드백을 모아드립니다.
@@ -110,7 +113,7 @@ export default function HomePage() {
                 </a>
                 <a
                   href="#demo"
-                  className="text-[14px] md:text-[15px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
+                  className="bg-zinc-950/80 rounded-xl text-[14px] md:text-[15px] text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors"
                 >
                   위젯 미리보기 ↓
                 </a>
