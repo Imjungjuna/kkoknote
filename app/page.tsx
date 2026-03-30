@@ -86,7 +86,7 @@ export default function HomePage() {
                 </span>
               </p>
               <h1
-                className="bg-zinc-950/60 rounded-xl animate-fade-up text-[2rem] md:text-[3.25rem] leading-[1.1] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-5 md:mb-7"
+                className="bg-zinc-950/60 rounded-xl animate-fade-up text-[2rem] md:text-[3.25rem] leading-[1.1] font-semibold tracking-tight text-white dark:text-zinc-50 mb-5 md:mb-7"
                 style={{ animationDelay: "60ms" }}
               >
                 저 점 하나하나가
@@ -94,7 +94,7 @@ export default function HomePage() {
                 유저 피드백입니다.
               </h1>
               <p
-                className="animate-fade-up bg-zinc-950/65 rounded-xl text-[17px] md:text-[19px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-md mb-10 md:mb-12 md:leading-[1.7]"
+                className="animate-fade-up bg-zinc-950/65 rounded-xl text-[17px] md:text-[19px] text-zinc-400 dark:text-zinc-300 leading-relaxed max-w-md mb-10 md:mb-12 md:leading-[1.7]"
                 style={{ animationDelay: "120ms" }}
               >
                 KkokNote가 흩어진 피드백을 모아드립니다.
