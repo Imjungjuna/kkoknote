@@ -85,7 +85,7 @@ export default function BetaSignupForm({
           <button
             type="submit"
             disabled={status === "loading"}
-            className="w-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-lg px-4 py-3 text-[14px] font-medium hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors disabled:opacity-50"
+            className="w-full text-base bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-lg px-4 py-3 font-medium hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors disabled:opacity-50"
           >
             {status === "loading" ? "신청 중…" : "베타테스터 신청하기"}
           </button>
@@ -102,9 +102,9 @@ export default function BetaSignupForm({
       )}
 
       {/* Beta 현황 */}
-      <p className="text-[12px] text-zinc-400 dark:text-zinc-500 text-center pt-3">
+      <p className="text-sm text-zinc-400 dark:text-zinc-500 text-center pt-3">
         <span className="text-zinc-900 dark:text-zinc-100 font-semibold">
-          {remaining}
+          {remaining - 30}
         </span>
         {" / "}
         {BETA_SLOTS} 자리 남음
