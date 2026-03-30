@@ -7,9 +7,7 @@ const BETA_SLOTS = 50;
 function getBetaRemainingPromise() {
   return cookies().then(async (cookieStore) => {
     const supabase = await createClient();
-    const { count } = await supabase
-      .from("beta_registrations")
-      .select("*", { count: "exact", head: true });
+    const { data: count } = await supabase.rpc("beta_registrations_count");
     return Math.max(0, BETA_SLOTS - (count ?? 0));
   });
 }
