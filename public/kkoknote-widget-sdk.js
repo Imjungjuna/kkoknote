@@ -28156,14 +28156,14 @@ ${suffix}`;
   var resolveHeadersConstructor = () => {
     return Headers;
   };
-  var fetchWithAuth = (supabaseKey2, getAccessToken, customFetch) => {
+  var fetchWithAuth = (supabaseKey, getAccessToken, customFetch) => {
     const fetch$1 = resolveFetch4(customFetch);
     const HeadersConstructor = resolveHeadersConstructor();
     return async (input, init) => {
       var _await$getAccessToken;
-      const accessToken = (_await$getAccessToken = await getAccessToken()) !== null && _await$getAccessToken !== void 0 ? _await$getAccessToken : supabaseKey2;
+      const accessToken = (_await$getAccessToken = await getAccessToken()) !== null && _await$getAccessToken !== void 0 ? _await$getAccessToken : supabaseKey;
       let headers = new HeadersConstructor(init === null || init === void 0 ? void 0 : init.headers);
-      if (!headers.has("apikey")) headers.set("apikey", supabaseKey2);
+      if (!headers.has("apikey")) headers.set("apikey", supabaseKey);
       if (!headers.has("Authorization")) headers.set("Authorization", `Bearer ${accessToken}`);
       return fetch$1(input, _objectSpread23(_objectSpread23({}, init), {}, { headers }));
     };
@@ -28187,8 +28187,8 @@ ${suffix}`;
     else delete result.accessToken;
     return result;
   }
-  function validateSupabaseUrl(supabaseUrl2) {
-    const trimmedUrl = supabaseUrl2 === null || supabaseUrl2 === void 0 ? void 0 : supabaseUrl2.trim();
+  function validateSupabaseUrl(supabaseUrl) {
+    const trimmedUrl = supabaseUrl === null || supabaseUrl === void 0 ? void 0 : supabaseUrl.trim();
     if (!trimmedUrl) throw new Error("supabaseUrl is required.");
     if (!trimmedUrl.match(/^https?:\/\//i)) throw new Error("Invalid supabaseUrl: Must be a valid HTTP or HTTPS URL.");
     try {
@@ -28390,12 +28390,12 @@ ${suffix}`;
     * const { data } = await supabase.from('profiles').select('*')
     * ```
     */
-    constructor(supabaseUrl2, supabaseKey2, options) {
+    constructor(supabaseUrl, supabaseKey, options) {
       var _settings$auth$storag, _settings$global$head;
-      this.supabaseUrl = supabaseUrl2;
-      this.supabaseKey = supabaseKey2;
-      const baseUrl = validateSupabaseUrl(supabaseUrl2);
-      if (!supabaseKey2) throw new Error("supabaseKey is required.");
+      this.supabaseUrl = supabaseUrl;
+      this.supabaseKey = supabaseKey;
+      const baseUrl = validateSupabaseUrl(supabaseUrl);
+      if (!supabaseKey) throw new Error("supabaseKey is required.");
       this.realtimeUrl = new URL("realtime/v1", baseUrl);
       this.realtimeUrl.protocol = this.realtimeUrl.protocol.replace("http", "ws");
       this.authUrl = new URL("auth/v1", baseUrl);
@@ -28420,7 +28420,7 @@ ${suffix}`;
           throw new Error(`@supabase/supabase-js: Supabase Client is configured with the accessToken option, accessing supabase.auth.${String(prop)} is not possible`);
         } });
       }
-      this.fetch = fetchWithAuth(supabaseKey2, this._getAccessToken.bind(this), settings.global.fetch);
+      this.fetch = fetchWithAuth(supabaseKey, this._getAccessToken.bind(this), settings.global.fetch);
       this.realtime = this._initRealtimeClient(_objectSpread23({
         headers: this.headers,
         accessToken: this._getAccessToken.bind(this)
@@ -28572,8 +28572,8 @@ ${suffix}`;
       }
     }
   };
-  var createClient = (supabaseUrl2, supabaseKey2, options) => {
-    return new SupabaseClient(supabaseUrl2, supabaseKey2, options);
+  var createClient = (supabaseUrl, supabaseKey, options) => {
+    return new SupabaseClient(supabaseUrl, supabaseKey, options);
   };
   function shouldShowDeprecationWarning() {
     if (typeof window !== "undefined") return false;
@@ -29088,13 +29088,13 @@ ${suffix}`;
 
   // node_modules/@supabase/ssr/dist/module/createBrowserClient.js
   var cachedBrowserClient;
-  function createBrowserClient(supabaseUrl2, supabaseKey2, options) {
+  function createBrowserClient(supabaseUrl, supabaseKey, options) {
     var _a2, _b, _c, _d, _e;
     const shouldUseSingleton = (options == null ? void 0 : options.isSingleton) === true || (!options || !("isSingleton" in options)) && isBrowser2();
     if (shouldUseSingleton && cachedBrowserClient) {
       return cachedBrowserClient;
     }
-    if (!supabaseUrl2 || !supabaseKey2) {
+    if (!supabaseUrl || !supabaseKey) {
       throw new Error(`@supabase/ssr: Your project's URL and API key are required to create a Supabase client!
 
 Check your Supabase project's API settings to find these values
@@ -29104,7 +29104,7 @@ https://supabase.com/dashboard/project/_/settings/api`);
     const { storage } = createStorageFromOptions(__spreadProps(__spreadValues({}, options), {
       cookieEncoding: (_a2 = options == null ? void 0 : options.cookieEncoding) != null ? _a2 : "base64url"
     }), false);
-    const client = createClient(supabaseUrl2, supabaseKey2, __spreadProps(__spreadValues({}, options), {
+    const client = createClient(supabaseUrl, supabaseKey, __spreadProps(__spreadValues({}, options), {
       global: __spreadProps(__spreadValues({}, options == null ? void 0 : options.global), {
         headers: __spreadProps(__spreadValues({}, (_b = options == null ? void 0 : options.global) == null ? void 0 : _b.headers), {
           "X-Client-Info": `supabase-ssr/${VERSION} createBrowserClient`
@@ -29160,9 +29160,12 @@ https://supabase.com/dashboard/project/_/settings/api`);
   }
 
   // lib/supabase/client.ts
-  var supabaseUrl = "";
-  var supabaseKey = "";
-  var createClient2 = () => createBrowserClient(supabaseUrl, supabaseKey);
+  function createClient2() {
+    return createBrowserClient(
+      "",
+      ""
+    );
+  }
 
   // src/store/useWidgetStore.ts
   var useWidgetStore = create((set, get2) => ({

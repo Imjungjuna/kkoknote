@@ -225,7 +225,10 @@ export default function HomePage() {
 
       {/* Beta CTA */}
       <section className="border-t border-zinc-100 dark:border-zinc-800 py-24 flex justify-center px-6">
-        <BetaSection hideFeatures={true} />
+        <BetaSection
+          hideFeatures={true}
+          remainingPromise={Promise.resolve(25)}
+        />
       </section>
 
       {/* Footer */}
