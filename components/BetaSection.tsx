@@ -1,4 +1,7 @@
-import BetaSignupForm from "@/components/BetaSignupFormClient";
+"use client";
+
+import { use } from "react";
+import BetaSignupForm from "@/components/BetaSignupForm";
 
 const features = [
   "스크립트 태그 하나로 설치 완료 — 백엔드 불필요",
@@ -7,10 +10,14 @@ const features = [
 ];
 
 export default function BetaSection({
+  remainingPromise,
   hideFeatures,
 }: {
+  remainingPromise: Promise<number>;
   hideFeatures?: boolean;
 }) {
+  const initialRemaining = use(remainingPromise);
+
   return (
     <div className="w-full max-w-sm md:max-w-md flex flex-col gap-10">
       {/* Hero */}
@@ -56,7 +63,7 @@ export default function BetaSection({
 
       {/* Form */}
       <div className="animate-fade-up" style={{ animationDelay: "160ms" }}>
-        <BetaSignupForm />
+        <BetaSignupForm initialRemaining={initialRemaining} />
       </div>
     </div>
   );
