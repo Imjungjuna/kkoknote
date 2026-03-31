@@ -97,7 +97,7 @@ export default function BetaSignupForm({
           <button
             type="submit"
             disabled={status === "loading"}
-            className="w-full text-base bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-lg px-4 py-3 font-medium hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors disabled:opacity-50"
+            className="w-full text-base bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-md px-4 py-3 font-medium hover:bg-zinc-700 dark:hover:bg-zinc-300 transition-colors disabled:opacity-50"
           >
             {status === "loading" ? "신청 중…" : "베타테스터 신청하기"}
           </button>

@@ -22,8 +22,8 @@ export default function BetaSection({
     <div className="w-full max-w-sm md:max-w-md flex flex-col gap-10">
       {/* Hero */}
       <div className="animate-fade-up" style={{ animationDelay: "0ms" }}>
-        <p className="text-[11px] tracking-[0.2em] uppercase text-zinc-400 mb-5">
-          Coming Soon
+        <p className="text-sm tracking-wide text-zinc-400 mb-5 font-semibold">
+          50명 한정 베타 오픈
         </p>
         <h2 className="text-[2rem] leading-[1.15] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 mb-4">
           유저 피드백,
@@ -50,7 +50,7 @@ export default function BetaSection({
         >
           {features.map((f, i) => (
             <li key={f} className="flex items-start gap-3">
-              <span className="text-[11px] text-zinc-300 dark:text-zinc-600 shrink-0 pt-[2px] font-mono">
+              <span className="text-[14px] text-zinc-300 dark:text-zinc-600 shrink-0 pt-px font-mono font-semibold">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="text-[14px] text-zinc-500 dark:text-zinc-400 leading-relaxed">

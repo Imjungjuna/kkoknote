@@ -82,7 +82,7 @@ export default function HomePage() {
               <p className=" animate-fade-up text-[12px] tracking-[0.2em] uppercase text-zinc-400 mb-6">
                 <span className="bg-zinc-950/80 rounded-lg">
                   {" "}
-                  Coming Soon · 베타 모집 중
+                  50명 한정 베타 오픈
                 </span>
               </p>
               <h1
