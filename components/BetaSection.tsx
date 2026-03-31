@@ -4,7 +4,7 @@ import { use } from "react";
 import BetaSignupForm from "@/components/BetaSignupForm";
 
 const features = [
-  "스크립트 태그 하나로 설치 완료 — 백엔드 불필요",
+  "스크립트 태그 하나로 설치 완료",
   "투표, 피드백 보드, 체인지로그 기본 제공",
   "서비스 디자인에 맞는 위젯 커스터마이징",
 ];
