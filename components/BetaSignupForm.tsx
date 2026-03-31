@@ -4,6 +4,13 @@ import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
+// 컴포넌트 파일 맨 위에 타입 선언 추가
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 type Status = "idle" | "loading" | "success" | "duplicate" | "error";
 
 const BETA_SLOTS = 50;
@@ -45,6 +52,11 @@ export default function BetaSignupForm({
               return;
             }
 
+            window.gtag?.("event", "conversion", {
+              send_to: "AW-18047823215/PTL0CNiz6JIcEO_a751D",
+              value: 1.0,
+              currency: "KRW",
+            });
             setRemaining((r) => Math.max(0, r - 1));
             setStatus("success");
           } catch {

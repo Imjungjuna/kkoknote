@@ -33,17 +33,17 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <Script
-          id="gtag-init"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18047823215"
           strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){window.dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-18047823215');
-    `,
-          }}
         />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18047823215');
+          `}
+        </Script>
       </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
